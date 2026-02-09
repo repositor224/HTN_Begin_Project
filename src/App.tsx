@@ -3,7 +3,7 @@ import Events from "./pages/Events";
 import EventDetail from "./pages/EventDetail";
 import Login from "./pages/Login";
 import { useAuth } from "./auth/AuthContext";
-import "./App.css"; // global styles
+import "./App.css"; 
 
 export default function App() {
   const { isLoggedIn } = useAuth();
@@ -12,13 +12,13 @@ export default function App() {
     <div className="app-container">
       <BrowserRouter>
         <Routes>
-          {/* Start at login, redirect if already logged in */}
+          {/* Start at login page, redirect to the event page if already logged in */}
           <Route
             path="/"
             element={isLoggedIn ? <Navigate to="/events" /> : <Login />}
           />
 
-          {/* Protect events */}
+          
           <Route
             path="/events"
             element={isLoggedIn ? <Events /> : <Navigate to="/login" />}
