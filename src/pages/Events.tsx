@@ -29,23 +29,23 @@ export default function Events() {
   }, []);
 
   const visibleEvents = events.filter(event => {
-    // Guests only see public events
+    
     if (isGuest && event.permission !== "public") return false;
 
-    // Normal login: hide private if not logged in
+    // Private is hidden when login as a guest
     if (!isLoggedIn && !isGuest && event.permission === "private") return false;
 
     if (onlyFuture && event.start_time < NOW) return false;
     if (search && !event.name.toLowerCase().includes(search.toLowerCase())) return false;
     if (typeFilter !== "all" && event.event_type !== typeFilter) return false;
 
-    // Duration filter
+    // Duration filter. Only include the events with a duration of maximum X minutes
     if (durationFilter > 0) {
       const durationMinutes = (event.end_time - event.start_time) / (1000 * 60);
       if (durationMinutes > durationFilter) return false;
     }
 
-    // Start time filter
+    // Filter the events based on their start time
     if (startTimeFilter) {
       const chosenTime = new Date(startTimeFilter).getTime();
       if (event.start_time < chosenTime) return false;
@@ -56,7 +56,7 @@ export default function Events() {
 
   return (
     <div className="events-page">
-      {/* Top header */}
+      {}
       <div className="events-top-fixed">
         <div className="events-header">
           <h1>Events</h1>
@@ -74,7 +74,7 @@ export default function Events() {
           </button>
         </div>
 
-        {/* Filters */}
+        {}
         <div className="events-filters">
           <input
             type="text"
@@ -123,7 +123,7 @@ export default function Events() {
         </div>
       </div>
 
-      {/* Events grid */}
+      {}
       <div className="events-grid-container">
         {visibleEvents.map(event => (
           <EventCard
@@ -137,7 +137,7 @@ export default function Events() {
   );
 }
 
-// Helper to generate consistent color per event
+// Helper function to make different colours for the Event Box at Event Page
 function getRandomColor(seed: number) {
   const colors = ["#f87171", "#60a5fa", "#34d399", "#fbbf24", "#a78bfa"];
   return colors[seed % colors.length];
