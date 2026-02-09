@@ -7,22 +7,19 @@ import { useNavigate } from "react-router-dom";
 import "./Events.css";
 
 export default function Events() {
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, isGuest, logout } = useAuth();
   const navigate = useNavigate();
 
   const [events, setEvents] = useState<TEvent[]>([]);
 
-  // Definition of Filters
+
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("all");
-  const [durationFilter, setDurationFilter] = useState(0);
+  const [durationFilter, setDurationFilter] = useState(0); 
   const [startTimeFilter, setStartTimeFilter] = useState(""); 
   const [onlyFuture, setOnlyFuture] = useState(false);
 
   const NOW = new Date("2021-12-01T00:00:00Z").getTime();
-
-  // Five types of colour used for the project. Since each row has five events, A row will include all five colors and each event box will have 1 color
-  const colors = ["#f87171", "#fbbf24", "#34d399", "#60a5fa", "#a78bfa"];
 
   useEffect(() => {
     fetchEvents().then(data => {
@@ -31,19 +28,24 @@ export default function Events() {
     });
   }, []);
 
-  const visibleEvents = events.filter(event => { //filter the events based on those differnet types of filters
-    if (!isLoggedIn && event.permission === "private") return false;
+  const visibleEvents = events.filter(event => {
+    // Guests only see public events
+    if (isGuest && event.permission !== "public") return false;
+
+    // Normal login: hide private if not logged in
+    if (!isLoggedIn && !isGuest && event.permission === "private") return false;
+
     if (onlyFuture && event.start_time < NOW) return false;
     if (search && !event.name.toLowerCase().includes(search.toLowerCase())) return false;
     if (typeFilter !== "all" && event.event_type !== typeFilter) return false;
 
-    // Duration filter (used with the slider)
+    // Duration filter
     if (durationFilter > 0) {
       const durationMinutes = (event.end_time - event.start_time) / (1000 * 60);
       if (durationMinutes > durationFilter) return false;
     }
 
-    
+    // Start time filter
     if (startTimeFilter) {
       const chosenTime = new Date(startTimeFilter).getTime();
       if (event.start_time < chosenTime) return false;
@@ -54,24 +56,26 @@ export default function Events() {
 
   return (
     <div className="events-page">
-
-      {/* Make sure the top part does not move as a result */}
+      {/* Top header */}
       <div className="events-top-fixed">
         <div className="events-header">
           <h1>Events</h1>
           <button
             className="logout-btn"
             onClick={() => {
-              logout();
-              navigate("/login");
+              if (isGuest) navigate("/login");
+              else {
+                logout();
+                navigate("/login");
+              }
             }}
           >
-            Logout
+            {isGuest ? "Login" : "Logout"}
           </button>
         </div>
 
+        {/* Filters */}
         <div className="events-filters">
-          {/* Search Bar */}
           <input
             type="text"
             placeholder="Search events..."
@@ -79,7 +83,6 @@ export default function Events() {
             onChange={(e) => setSearch(e.target.value)}
           />
 
-          {/* Filter based on event type */}
           <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
             <option value="all">All Types</option>
             <option value="workshop">Workshop</option>
@@ -87,7 +90,6 @@ export default function Events() {
             <option value="tech_talk">Tech Talk</option>
           </select>
 
-          {/* SLider is here*/}
           <label>
             Max Duration (minutes):
             <input
@@ -101,7 +103,6 @@ export default function Events() {
             {durationFilter} min
           </label>
 
-          {/* Filter events that start after a specific time*/}
           <label>
             Start on/after:
             <input
@@ -111,7 +112,6 @@ export default function Events() {
             />
           </label>
 
-          {/* Checkbox which only shows events happening now in the future*/}
           <label>
             <input
               type="checkbox"
@@ -123,16 +123,22 @@ export default function Events() {
         </div>
       </div>
 
-      
+      {/* Events grid */}
       <div className="events-grid-container">
-        {visibleEvents.map((event, index) => (
+        {visibleEvents.map(event => (
           <EventCard
             key={event.id}
             event={event}
-            color={colors[index % colors.length]} 
+            color={getRandomColor(event.id)}
           />
         ))}
       </div>
     </div>
   );
+}
+
+// Helper to generate consistent color per event
+function getRandomColor(seed: number) {
+  const colors = ["#f87171", "#60a5fa", "#34d399", "#fbbf24", "#a78bfa"];
+  return colors[seed % colors.length];
 }

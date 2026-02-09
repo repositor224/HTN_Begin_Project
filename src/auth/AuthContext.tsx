@@ -3,57 +3,77 @@ import { loginUser } from "../api/db";
 
 interface AuthContextType {
   isLoggedIn: boolean;
+  isGuest: boolean;
   currentUser: string | null;
   login: (username: string, password: string) => Promise<boolean>;
+  guestLogin: () => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
   isLoggedIn: false,
+  isGuest: false,
   currentUser: null,
   login: async () => false,
+  guestLogin: () => {},
   logout: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isGuest, setIsGuest] = useState(false);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check localStorage on mount
     const storedUser = localStorage.getItem("currentUser");
+    const guestFlag = localStorage.getItem("isGuest") === "true";
     if (storedUser) {
       setCurrentUser(storedUser);
       setIsLoggedIn(true);
+      setIsGuest(guestFlag);
     }
-    setLoading(false); 
+    setLoading(false);
   }, []);
 
   const login = async (username: string, password: string) => {
-    const success = await loginUser(username, password); // call on backend                                                                                                                                           
+    const success = await loginUser(username, password);
     if (success) {
       setIsLoggedIn(true);
+      setIsGuest(false);
       setCurrentUser(username);
       localStorage.setItem("currentUser", username);
+      localStorage.setItem("isGuest", "false");
     } else {
       setIsLoggedIn(false);
+      setIsGuest(false);
       setCurrentUser(null);
       localStorage.removeItem("currentUser");
+      localStorage.removeItem("isGuest");
     }
     return success;
   };
 
-  const logout = () => {
-    setIsLoggedIn(false);
-    setCurrentUser(null);
-    localStorage.removeItem("currentUser");
+  const guestLogin = () => {
+    setIsLoggedIn(true);
+    setIsGuest(true);
+    setCurrentUser("Guest");
+    localStorage.setItem("currentUser", "Guest");
+    localStorage.setItem("isGuest", "true");
   };
 
-  if (loading) return <div>Loading...</div>; // prevent redirect until checking is completed
+  const logout = () => {
+    setIsLoggedIn(false);
+    setIsGuest(false);
+    setCurrentUser(null);
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("isGuest");
+  };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, currentUser, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, isGuest, currentUser, login, guestLogin, logout }}>
       {children}
     </AuthContext.Provider>
   );

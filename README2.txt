@@ -1,8 +1,6 @@
 README: Instructions of running the program.
 Step 1: Use git clone to clone the repository
-Step 2: CD to htn-events/server and input node server.js to start the backend
-Step 3: Start Another Terminal
-Step 3: CD to htn-events and input ‘npm run dev’ to start the frontend
+Step 2: CD to htn-events and input ‘npm run dev’ to start the frontend
 
 Q1.
 I start by identifying the key functionalities of the program and ensure that the key functionalities could run as expected. This includes registration/login, event page, filtering and event page detail display. After this is completed, I will work on refining some details, such as displaying each individual box of event page with different colour and orientation, filtering using several different methods so that it is effective. In terms of the design, I start with the bare bone (which makes sure the function 100% show up and work), then i set the location and places of each user interface via CSS, and finally I beautify the remaining factors, such as colour and interactivity.
