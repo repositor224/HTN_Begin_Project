@@ -1,4 +1,4 @@
-/* Reset defaults */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -11,29 +11,28 @@ html, body, #root {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background: #f9fafb; /* subtle light background */
+  background: #f9fafb; 
 }
 
-/* App container fills full browser */
+
 .app-container {
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: stretch; /* ensure children can span full width in the cross-axis */
+  align-items: stretch; /* ensure children can span the full width of the web screen page */
 }
 
-/* If you have a wrapper that was constraining width, neutralize it.
-   Keep or remove selectors here based on your actual component classNames. */
+
 .container, .page, .content, .main {
   width: 100%;
-  max-width: none; /* 'none' removes any maximum width constraint [web:16] */
+  max-width: none; 
   margin-left: 0;
   margin-right: 0;
 }
 
-/* Optional: link styles */
+
 a {
   color: #6366f1;
   text-decoration: none;
@@ -43,7 +42,7 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Buttons (default for logout etc.) */
+/* CSS styles for buttons */
 button {
   cursor: pointer;
   border: none;
@@ -52,7 +51,7 @@ button {
   font-weight: bold;
 }
 
-/* Ensure forms and inputs are consistent */
+/* Ensure forms and inputs are consistent at all times in the app*/
 input, select {
   padding: 6px 10px;
   border-radius: 6px;
