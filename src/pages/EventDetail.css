@@ -1,0 +1,129 @@
+.event-detail-page {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background: #f5f5f5;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.event-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  padding: 12px 20px;
+  border-radius: 12px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.event-detail-header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.logout-btn {
+  background: white;
+  color: #4f46e5;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #e0e7ff;
+}
+
+.event-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-info {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.event-info p {
+  margin: 8px 0;
+}
+
+.event-info .description {
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+.event-speakers, .related-events {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.event-speakers h3,
+.related-events h3 {
+  margin-top: 0;
+  color: #4f46e5;
+}
+
+.event-speakers ul,
+.related-events ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.event-speakers li,
+.related-events li {
+  margin: 6px 0;
+}
+
+.related-link {
+  text-decoration: none;
+  color: #6366f1;
+  font-weight: 500;
+}
+
+.related-link:hover {
+  text-decoration: underline;
+  color: #8b5cf6;
+}
+
+.back-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #6366f1;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: #8b5cf6;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #4f46e5;
+  margin-top: 40px;
+}
+
+/* adjustments for responsivity */
+@media (max-width: 768px) {
+  .event-detail-page {
+    padding: 15px;
+  }
+  .event-detail-header h1 {
+    font-size: 22px;
+  }
+}

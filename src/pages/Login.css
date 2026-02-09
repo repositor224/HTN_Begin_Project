@@ -1,0 +1,124 @@
+/* Center the login page */
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  position: relative;
+  overflow: hidden;
+  padding-top: 60px;
+}
+
+.hack-icons {
+  position: absolute;
+  top: 20px;
+  display: flex;
+  gap: 30px;
+  animation: move-icons 8s linear infinite;
+}
+
+.hack-icons img {
+  width: 50px;
+  height: 50px;
+}
+
+@keyframes move-icons {
+  0% {
+    left: -150px;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -150px;
+  }
+}
+
+/* Login container */
+.login-container {
+  background: white;
+  border-radius: 12px;
+  padding: 40px 50px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 320px;
+}
+
+
+.login-header {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #4f46e5;
+}
+
+/* Error message */
+.error-msg {
+  background: #ff4d4f;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+}
+
+
+.login-btn {
+  width: 100%;
+  background: #6366f1;
+  color: white;
+  font-weight: bold;
+  padding: 12px 0;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-btn:hover {
+  background: #4f46e5;
+  transform: scale(1.05);
+}
+
+
+.register-link {
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+}
+.login-success {
+  color: green;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.login-error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 16px;
+}
